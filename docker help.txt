@@ -1,0 +1,53 @@
+docker-compose
+    -f local.yml
+        build  == "construir imagenes"
+        up  == "iniciar servicios"
+        down == "detener servicios"
+        ps == "imagenes que estan iniciadas"
+        run == "execute interactive commands"
+        rm "remove a runing container"
+
+        container
+        images
+        volume
+        network
+            ls
+            rm
+            prune
+            -a  == "mostrar todos"
+            -q == "mostrar solo ids"
+
+    OPTIONS
+    --rm == "on commnad was executed kill the container"
+    --service-ports == "Expose ports of container"
+
+export COMPOSE_FILE=local.yml    == "
+    crea una variable de entorno para no 
+    tener que poner -f local.yml siempre
+"
+
+
+ENLACES:
+    https://github.com/audreyr/cookiecutter
+
+
+=== COMMANDS TO IN TERACT WITH MANAGE.PY FILE ===
+
+docker-compose
+    run --rm django COMMAND
+
+docker-compose run --rm django python manage.py createsuperuser
+
+
+== ENABLE DEBUG MODE ===
+docker-compose up
+docker-compose ps
+docker-compose rm -f <ID>
+
+docker-compose run --rm --service-ports django
+
+
+=== DEBUGG DJANGO COMMNADS ====
+
+
+
