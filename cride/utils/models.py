@@ -26,6 +26,6 @@ class CRideModel(models.Model):
         "Meta option."
 
         abstract = True
-        get_lates_by = 'created'
+        # get_lates_by = 'created'
         ordering = ['-created', '-modified']
 
