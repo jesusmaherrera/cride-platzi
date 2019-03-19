@@ -14,11 +14,11 @@ class Circle(CRideModel):
 	invitation code from an existing circle member.
 	"""
 
-	name = models.CharField('circle name', max_lenght=140)
-	slug_name = models.SlugField(unique=True, max_lenght=40)
+	name = models.CharField('circle name', max_length=140)
+	slug_name = models.SlugField(unique=True, max_length=40)
 
-	about = models.CharField('circle description', max_lenght=255)
-	picture = models.ImageField(upload_to='circles/pictures', blanck=True, null=True)
+	about = models.CharField('circle description', max_length=255)
+	picture = models.ImageField(upload_to='circles/pictures', blank=True, null=True)
 
 	# Stats
 	rides_offered = models.PositiveIntegerField(default=0)
