@@ -42,7 +42,7 @@ docker-compose run --rm django python manage.py createsuperuser
 == ENABLE DEBUG MODE ===
 docker-compose up
 docker-compose ps
-docker-compose rm -f <ID>
+docker rm -f <ID>
 
 docker-compose run --rm --service-ports django
 
