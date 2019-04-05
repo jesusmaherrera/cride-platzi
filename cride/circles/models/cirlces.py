@@ -53,5 +53,6 @@ class Circle(CRideModel):
 		"""Meta Class."""
 
 		ordering = ['-rides_taken', '-rides_offered' ]
+		get_latest_by = ['created', ]
 
 
