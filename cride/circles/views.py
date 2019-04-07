@@ -29,6 +29,5 @@ def create_circlce(request):
     """Create circle."""
     serializer = CreateCircleSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    data = serializer.data
-    circle = Circle.objects.create(**data)
+    circle = serializer.save()
     return Response(CircleSerializer(circle).data)
