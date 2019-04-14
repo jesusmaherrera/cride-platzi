@@ -1,4 +1,4 @@
-"""CIrcles views. """
+"""Circles views. """
 
 # Django REST Framework
 from rest_framework.decorators import api_view
