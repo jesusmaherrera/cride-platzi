@@ -22,7 +22,7 @@ docker-compose
     --service-ports == "Expose ports of container"
 
 export COMPOSE_FILE=local.yml    == "
-    WINDOWS : set COMPOSE_FILE=local.yml
+    WINDOWS : 
     crea una variable de entorno para no 
     tener que poner -f local.yml siempre
 "
@@ -49,6 +49,25 @@ docker-compose run --rm --service-ports django
 
 
 === DEBUGG DJANGO COMMNADS ====
+
+
+# Iniciar contenedores
+
+cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
+set COMPOSE_FILE=local.yml
+docker-compose up
+
+# Detener django
+
+cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
+set COMPOSE_FILE=local.yml
+docker-compose ps
+docker rm -f cride-platzi_django_1
+
+# Iniciar Docker
+cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
+set COMPOSE_FILE=local.yml
+docker-compose run --rm --service-ports django
 
 
 

@@ -3,6 +3,8 @@
 # Django
 from django.contrib.auth import password_validation, authenticate
 from django.core.validators import RegexValidator
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 # Django REST Framework
 from rest_framework import serializers
@@ -72,12 +74,32 @@ class UserSignUpSerializer(serializers.Serializer):
             raise serializers.ValidationError("Password don't match.")
         password_validation.validate_password(passwd)
         return data
+
     def create(self, data):
         """Handle user and profile creation."""
         data.pop("password_confirmation")
         user = User.objects.create_user(**data, is_verified=False)
         profile = Profile.objects.create(user=user)
+        self.send_confirmation_email(user)
         return user, profile
+
+    def send_confirmation_email(self, user):
+        """ Send acount verification link to given user."""
+        verification_token = self.get_verification_token(user)
+        subject = 'Welcome @{}! Verify your acount to start using Comparte Ride'.format(user.username)
+        from_email = 'Comparte Ride <noreplay@comparteride.com>'
+        content = render_to_string('emails/users/account_verification.html', 
+            {'token': verification_token, 'user':user, }
+        )
+        text_context = 'This is an important message.'
+        html_context = '<p>This is an <strong>important</strong> message.</p>'
+        msg = EmailMultiAlternatives(subject, content, from_email, [user.email])
+        msg.attach_alternative(content, 'text/html')
+        msg.send()
+
+    def get_verification_token(self, user):
+        """Create JWT token that the user can use to verify its account."""
+        return 'abc'
 
 
 class UserLoginSerializer(serializers.Serializer):
