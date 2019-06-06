@@ -57,17 +57,19 @@ cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
 set COMPOSE_FILE=local.yml
 docker-compose up
 
-# Detener django
+# Detener e Iniciar django 
 
 cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
 set COMPOSE_FILE=local.yml
 docker-compose ps
 docker rm -f cride-platzi_django_1
+docker-compose run --rm --service-ports django
 
-# Iniciar Docker
+# Debug plus
+
 cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
 set COMPOSE_FILE=local.yml
-docker-compose run --rm --service-ports django
+docker-compose run --rm django python manage.py shell_plus
 
 
 
