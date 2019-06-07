@@ -69,7 +69,7 @@ docker-compose run --rm --service-ports django
 
 cd C:\Users\manuel.herrera\Documents\GitHub\cride-platzi
 set COMPOSE_FILE=local.yml
-docker-compose run --rm django python manage.pyUser shell_plus
+docker-compose run --rm django python manage.py shell_plus
 
 
 
