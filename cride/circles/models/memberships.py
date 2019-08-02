@@ -20,7 +20,7 @@ class Membership(CRideModel):
 	is_admin = models.BooleanField(
 		'circle admin',
 		default=False,
-		help_text="Circle admisn can update the cirlce's data and manage its members."
+		help_text="Circle admisn can update the circle's data and manage its members."
 	)
 
 	# Invitations
@@ -41,7 +41,7 @@ class Membership(CRideModel):
 	is_active = models.BooleanField(
 		'active status',
 		default=True,
-		help_text='Only active users are allowed to interact in the cirlce.'
+		help_text='Only active users are allowed to interact in the circle.'
 
 	)
 
@@ -50,5 +50,5 @@ class Membership(CRideModel):
 
 		return '@{} at #{}'.format(
 			self.user.username,
-			self.cirlce.slug_name
+			self.circle.slug_name
 		)
