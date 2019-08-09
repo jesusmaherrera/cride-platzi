@@ -1,2 +1,2 @@
-from .cirlces import Circle
+from .circles import Circle
 from .memberships import Membership
