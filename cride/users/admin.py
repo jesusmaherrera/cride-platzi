@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     """prifile model admin."""
     list_display = (
-        'reputation', 'rides_taken', 'rides_offered', )
+        'user', 'reputation', 'rides_taken', 'rides_offered', )
     search_fields = (
         'user__username', 'user__email',
         'user__first_name', 'user__last_name', )
