@@ -13,5 +13,5 @@ useradmin: jesus.herrera@copamex.com.mx
 
 ### remove a volume
 sudo docker-compose -f local.yml down
-docker volume ls
-docker volume rm nombre_de_volumen
+sudo docker volume ls
+sudo docker volume rm nombre_de_volumen
