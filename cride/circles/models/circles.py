@@ -28,7 +28,7 @@ class Circle(CRideModel):
     is_verified = models.BooleanField(
         'verified cirle',
         default=False,
-        'Verified circle are also know as official communities.'
+        help_text='Verified circle are also know as official communities.'
     )
 
     is_public = models.BooleanField(
@@ -50,6 +50,6 @@ class Circle(CRideModel):
         """Return circle name"""
         return self.name
 
-    class Meta(CRideModel.META):
+    class Meta(CRideModel.Meta):
         """Meta class"""
         ordering = ('-rides_taken', '-rides_offered')
