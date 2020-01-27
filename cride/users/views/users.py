@@ -1,11 +1,15 @@
 """User views."""
 
 # Django REST Framework
-from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 # serializers
-from cride.users.serializers import UserLoginSerializer 
+from cride.users.serializers import (
+    UserLoginSerializer,
+    UserModelSerializer,
+)
 
 
 class UserLoginAPIView(APIView):
@@ -15,8 +19,9 @@ class UserLoginAPIView(APIView):
         """Handle HTTP POST request."""
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        token = serializer.save()
+        user, token = serializer.save()
         data = {
-
+            'user': UserModelSerializer(user).data,
+            'access_token': token,
         }
-        return Response(data, status=status.HTTP_201_CREATED_)
+        return Response(data, status=status.HTTP_201_CREATED)
