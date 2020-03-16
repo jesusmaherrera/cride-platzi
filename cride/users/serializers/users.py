@@ -110,7 +110,7 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def send_confirmation_email(self, user):
         """Send account verification link to given user."""
-        verification_token = self.gen_verification_token(user)
+        self.gen_verification_token(user)
 
         subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
         text_content = 'This is an important message.'
