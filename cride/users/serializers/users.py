@@ -4,6 +4,7 @@
 from django.contrib.auth import password_validation, authenticate
 from django.core.validators import RegexValidator
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 # Django REST Framework
 from rest_framework import serializers
@@ -110,13 +111,18 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def send_confirmation_email(self, user):
         """Send account verification link to given user."""
-        self.gen_verification_token(user)
-
-        subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
-        text_content = 'This is an important message.'
-        html_content = '<p>This is an <strong>important</strong> message.</p>'
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
+        verification_token = self.gen_verification_token(user)
+        subject = (
+            'Welcome @ {}! Verify your account to start using '
+            'Comparte Ride').format(user.username)
+        from_email = 'Comparte Ride <noreplay@comparteride.com>'
+        content = render_to_string(
+            'emails/users/account_verification.html',
+            {'token': verification_token, 'user': user, },
+        )
+        msg = EmailMultiAlternatives(
+            subject, content, from_email, [user.email])
+        msg.attach_alternative(content, "text/html")
         msg.send()
 
     def gen_verification_token(self, user):
