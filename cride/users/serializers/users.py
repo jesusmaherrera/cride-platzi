@@ -20,6 +20,7 @@ from cride.users.models import User, Profile
 import jwt
 from datetime import timedelta
 
+
 class UserModelSerializer(serializers.ModelSerializer):
     """user model serializer."""
     class Meta:
@@ -58,6 +59,32 @@ class UserLoginSerializer(serializers.Serializer):
 
         token, created = Token.objects.get_or_create(user=self.context['user'])
         return self.context['user'], token.key
+
+
+class AcountVerificationSerializer(serializers.Serializer):
+    """Acount verification serializer."""
+    token = serializers.CharField()
+
+    def validate_token(self, data):
+        """Verify token is valid."""
+        try:
+            payload = jwt.decode(
+                data, settings.SECRET_KEY, algorithm=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise serializers.ValidationError('verification link has expired.')
+        except jwt.PyJWTError:
+            raise serializers.ValidationError('Invalid token.')
+        if payload['type'] != 'email_confirmation':
+            raise serializers.ValidationError('Invalid token.')
+        self.context['payload'] = payload
+        return data
+
+    def save(self):
+        """Update user's verification status."""
+        payload = self.context['payload']
+        user = User.objects.get(username=payload['user'])
+        user.is_verified = True
+        user.save()
 
 
 class UserSignUpSerializer(serializers.Serializer):
@@ -132,7 +159,7 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def gen_verification_token(self, user):
         """Create JWT token that the user can use to vertify its acount."""
-        exp_date = timezone.now() - timedelta(days=3)
+        exp_date = timezone.now() + timedelta(days=1)
         payload = {
             'user': user.username,
             'exp': int(exp_date.timestamp()),
