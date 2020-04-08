@@ -11,7 +11,7 @@ sudo docker-compose -f local.yml run --rm --service-ports django python manage.p
 useradmin: jesus.herrera@copamex.com.mx
 
 
-### remove a volume
+### remove a volume 6s
 sudo docker-compose -f local.yml down
 sudo docker volume ls
 sudo docker volume rm nombre_de_volumen
