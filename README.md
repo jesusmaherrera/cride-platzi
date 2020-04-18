@@ -15,3 +15,7 @@ useradmin: jesus.herrera@copamex.com.mx
 sudo docker-compose -f local.yml down
 sudo docker volume ls
 sudo docker volume rm nombre_de_volumen
+
+### debugger
+import pdb; pdb.set_trace()
+
