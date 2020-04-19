@@ -1,8 +1,8 @@
 """User views."""
 
 # Django REST Framework
-from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 # serializers
@@ -13,15 +13,15 @@ from cride.users.serializers import (
     AcountVerificationSerializer,
 )
 
-# models
-from cride.users.models import User
 
+class UserViewSet(viewsets.GenericViewSet):
+    """User view set.
 
-class UserLoginAPIView(APIView):
-    """User Login API View."""
-
-    def post(self, request, *args, **kwargs):
-        """Handle HTTP POST request."""
+    Handale sign up, login and account verification.
+    """
+    @action(detail=False, methods=['post', ])
+    def login(self, request):
+        """User login."""
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
@@ -31,24 +31,18 @@ class UserLoginAPIView(APIView):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
-
-class UserSignUpAPIView(APIView):
-    """User SignUp API View."""
-
-    def post(self, request, *args, **kwargs):
-        """Handle HTTP POST request."""
+    @action(detail=False, methods=['post', ])
+    def signup(self, request):
+        """User sign up."""
         serializer = UserSignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
 
-
-class AcountVerificationAPIView(APIView):
-    """Acount verification API View."""
-
-    def post(self, request, *args, **kwargs):
-        """Handle HTTP POST request."""
+    @action(detail=False, methods=['post', ])
+    def verify(self, request):
+        """Account verification."""
         serializer = AcountVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

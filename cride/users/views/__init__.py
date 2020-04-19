@@ -1,1 +1,1 @@
-from .users import UserLoginAPIView, UserSignUpAPIView, AcountVerificationAPIView
+from .users import UserViewSet
