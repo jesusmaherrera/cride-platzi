@@ -26,3 +26,24 @@ class IsActiveCircleMember(BasePermission):
         except Membership.DoesNotExist:
             return False
         return True
+
+
+# class IsSelfeMember(BasePermission):
+#     """Allow access only to circle members.
+
+#     Expect that the views implementing this permission
+#     have a `cirlce` attribute assigned.
+#     """
+
+#     def has_permission(self, request, view):
+#         """Verify user is an active member of the circle."""
+
+#         try:
+#             Membership.objects.get(
+#                 user=request.user,
+#                 circle=view.circle,
+#                 is_active=True,
+#             )
+#         except Membership.DoesNotExist:
+#             return False
+#         return True
