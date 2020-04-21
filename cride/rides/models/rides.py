@@ -13,7 +13,7 @@ class Ride(CRideModel):
 
     passangers = models.ManyToManyField('users.User', related_name='passangers')
 
-    available_seats = models.PositiveIntegerField(min_lenght=1)
+    available_seats = models.PositiveIntegerField()
     comments = models.TextField(blank=True)
 
     departure_location = models.CharField(max_length=255)
@@ -31,7 +31,7 @@ class Ride(CRideModel):
 
     def __str__(self):
         """Return ride details."""
-        return '#{_form} to {to} | {day} {i_time} - {f_time} '.format(
+        return '#{_from} to {to} | {day} {i_time} - {f_time} '.format(
             _from=self.departure_location,
             to=self.arrival_location,
             day=self.departure_date.strftime('%a %d, %b'),

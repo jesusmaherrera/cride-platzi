@@ -28,6 +28,9 @@ class RideViewSet(mixins.CreateModelMixin,
         self.circle = get_object_or_404(Circle, slug_name=slug_name)
         return super().dispatch(request, *args, **kwargs)
 
-    def __init__(self, arg):
-        super(RideViewSet, self).__init__()
-        self.arg = arg
+    def get_serializer_context(self):
+        """Add cricle to serializer context.
+        """
+        context = super().get_serializer_context()
+        context['circle'] = self.circle
+        return context
