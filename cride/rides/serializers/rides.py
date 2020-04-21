@@ -12,6 +12,21 @@ from datetime import timedelta
 from django.utils import timezone
 
 
+class RideModelSerializer(serializers.ModelSerializer):
+    """Ride model serializer."""
+    class Meta:
+        """Meta class."""
+
+        model = Ride
+        fields = '__all__'
+        read_only_fields = (
+            'offered_in',
+            'passangers',
+            'rating',
+            'is_active',
+        )
+
+
 class CreateRideSerializer(serializers.ModelSerializer):
     """Create ride serializer."""
 
@@ -59,7 +74,7 @@ class CreateRideSerializer(serializers.ModelSerializer):
         self.context['membership'] = membership
         return data
 
-    def crate(self, data):
+    def create(self, data):
         """Create ride and update stats."""
         circle = self.context['circle']
         Ride.objects.create(**data, offered_in=circle)
