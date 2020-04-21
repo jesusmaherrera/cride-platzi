@@ -62,7 +62,7 @@ class CreateRideSerializer(serializers.ModelSerializer):
     def crate(self, data):
         """Create ride and update stats."""
         circle = self.context['circle']
-        Ride.objects.create(**data, circle=circle)
+        Ride.objects.create(**data, offered_in=circle)
 
         # Circle
         circle.rides_offered += 1
@@ -75,7 +75,7 @@ class CreateRideSerializer(serializers.ModelSerializer):
 
         # Profile
         profile = data['offered_by'].profile
-        profile.offered_by += 1
+        profile.rides_offered += 1
         profile.save()
 
         return data
