@@ -11,7 +11,7 @@ class Ride(CRideModel):
     offered_by = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
     offered_in = models.ForeignKey('circles.Circle', on_delete=models.SET_NULL, null=True)
 
-    passangers = models.ManyToManyField('users.User', related_name='passangers')
+    passengers = models.ManyToManyField('users.User', related_name='passengers')
 
     available_seats = models.PositiveIntegerField()
     comments = models.TextField(blank=True)
