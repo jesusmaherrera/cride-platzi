@@ -21,7 +21,7 @@ class RideModelSerializer(serializers.ModelSerializer):
     offered_by = UserModelSerializer(read_only=True)
     offered_in = serializers.StringRelatedField()
 
-    passangers = UserModelSerializer(read_only=True, many=True)
+    passengers = UserModelSerializer(read_only=True, many=True)
 
     class Meta:
         """Meta class."""
@@ -30,7 +30,7 @@ class RideModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = (
             'offered_in',
-            'passangers',
+            'passengers',
             'rating',
             'is_active',
         )
@@ -53,7 +53,7 @@ class CreateRideSerializer(serializers.ModelSerializer):
         """Meta class."""
 
         model = Ride
-        exclude = ('offered_in', 'passangers', 'rating', 'is_active', )
+        exclude = ('offered_in', 'passengers', 'rating', 'is_active', )
 
     def validate_departure_date(self, data):
         """Verify date is not in the past."""
@@ -183,3 +183,22 @@ class JoinRideSerializer(serializers.ModelSerializer):
         circle.save()
 
         return ride
+
+
+class EndRideSerializer(serializers.ModelSerializer):
+    """End ride serializer."""
+
+    current_time = serializers.DateTimeField()
+
+    class Meta:
+        """Meta class."""
+
+        model = Ride
+        fields = ('is_active', 'current_time')
+
+    def validate_current_time(self, data):
+        """Verify ride have indeed started."""
+        ride = self.context['view'].get_object()
+        if data <= ride.departure_date:
+            raise serializers.ValidationError('Ride has not started yet.')
+        return data

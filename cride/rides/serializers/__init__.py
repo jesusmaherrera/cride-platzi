@@ -1,1 +1,1 @@
-from .rides import CreateRideSerializer, RideModelSerializer, JoinRideSerializer
+from .rides import CreateRideSerializer, RideModelSerializer, JoinRideSerializer, EndRideSerializer
