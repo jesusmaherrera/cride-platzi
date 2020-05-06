@@ -19,3 +19,5 @@ sudo docker volume rm nombre_de_volumen
 ### debugger
 import pdb; pdb.set_trace()
 
+# ver factorybuy y django  test development para pruebas
+
